@@ -1,0 +1,21 @@
+{
+  "name": "learning_nodejs",
+  "version": "1.0.0",
+  "description": "Node Sikh Ne Ke Liye",
+  "homepage": "https://github.com/Meet-Raval09/Learning_NodeJs#readme",
+  "bugs": {
+    "url": "https://github.com/Meet-Raval09/Learning_NodeJs/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Meet-Raval09/Learning_NodeJs.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "hello.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"node hello.js"
+  }
+}

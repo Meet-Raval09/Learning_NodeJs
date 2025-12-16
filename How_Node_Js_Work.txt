@@ -1,0 +1,95 @@
+// How Node Js Work Is Explained Here.
+
+-- First There Are Mainly Two Times Of Request.
+1. Non-Blocking Operation.
+ 2. Blocking Operation.
+
+1. Non - Blocking Operations Requests.
+ -> NON-BLOCKING (Async) Request – Thread Pool Use Hoga.
+
+ // How It Work.
+
+  User Request.
+   ↓
+  Main Thread ne fs.readFile dekha.
+   ↓
+ libuv ne bola → ye async + heavy hai.
+   ↓
+ THREAD POOL ka ek worker assign hua.
+   ↓
+ Main Thread FREE ho gaya.
+   ↓
+ Meanwhile dusre users ki requests process hoti rahi.
+   ↓
+ Worker ne file read complete ki.
+   ↓
+ Result Callback Queue me gaya.
+   ↓
+ Event Loop ne callback uthaya.
+   ↓
+ res.end() chala.
+   ↓
+ User ko response mila.
+   ↓
+ Worker vapas free ho gaya.
+
+// Advantages Of Non - Blocking Request:
+ 1.Server kabhi block nahi hota.
+ 2.100 users bhi saath me aa sakte hain.
+ 3.Thread pool properly use hota hai.
+ 4.High performance.
+
+// 2. Blocking Operations Request.
+ -> BLOCKING (Sync) Request – Main Thread Freeze.
+
+ // How It Works.
+
+ User Request Aayi.
+    ↓
+ Main Thread ne fs.readFileSync uthaya.
+    ↓
+ Main Thread khud file read karne laga.
+    ↓
+ Event Loop BLOCK ho gaya.
+    ↓
+ Koi aur request process nahi ho sakti.
+    ↓
+ File complete hui.
+    ↓
+ Response User ko bheja.
+
+ // Disadvantages.
+ 1. 1 user slow ho → sab users slow.
+ 2. Server hang jaisa feel hota hai.
+ 3. Thread pool ka koi use nahi.
+ 4. Performance very poor.
+
+ // 3 NON-BLOCKING (Async) – Lekin Thread Pool Bhi Use Nahi Hota (Network I/O).
+  -> Example: HTTP API Call.
+
+  // How It Work.
+
+  Main Thread.
+   ↓
+ OS ke async network system ko kaam mil gaya.
+   ↓
+ Thread Pool ka koi role nahi.
+   ↓
+ Data aaya.
+   ↓
+ Callback Queue
+   ↓
+ Event Loop.
+   ↓
+ User ko output.
+
+ // Diffrence.
+| Type                   | Main Thread         | Thread Pool     | Event Loop       |
+| ---------------------- | ------------------- | --------------- | ---------------- |
+| **Sync (Blocking)**    | ✅Haan              | ❌ Nahi          | ✅ Par block      |
+| **Async FS/Crypto**    | ✅Trigger karta hai | ✅ Use hota hai  | ✅ Final response |
+| **Async HTTP/Network** | ✅Trigger karta hai | ❌ Use nahi hota | ✅ Final response |
+
+Final One-Line Summary (Perfect Interview Answer)
+1. Blocking (sync) operations main thread par chalte hain aur poora server freeze kar dete hain.
+2. Non-blocking (async) operations ya to OS async se handle hote hain ya libuv thread pool se, aur final response Event Loop user ko deta hai.

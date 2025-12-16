@@ -1,0 +1,18 @@
+Routes
+// GET
+get - get the all users data.
+get/user/1 = get user data with their id 1.
+
+//POST.
+post/users = create a user.
+
+//Patch
+patch/users/1 = update the user details with their id 1.
+
+// DELETE -
+delete/users/1 - delete the users data with id 1.
+
+
+
+
+
